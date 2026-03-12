@@ -1,16 +1,16 @@
-import * as repo from "../repositories/notification.repository"
+import * as repo from "./notification.repository"
 
-type CreateNotificationInput = {
+export type CreateNotificationInput = {
   userId: string
   type: string
   title: string
   body: string
 }
 
-export const createNotification = (data: CreateNotificationInput) => {
+export const createNotification = async (data: CreateNotificationInput) => {
   return repo.createNotification(data)
 }
 
-export const getNotifications = (userId: string) => {
+export const getNotifications = async (userId: string) => {
   return repo.getUserNotifications(userId)
 }

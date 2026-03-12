@@ -4,7 +4,13 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+}
+
+enum NotificationType {
+  SYSTEM
+  ORDER
+  COMMENT
+  FOLLOW
 }
 
 model User {
@@ -18,13 +24,13 @@ model User {
 model Notification {
   id        String   @id @default(uuid())
   userId    String
-  type      String
+  type      NotificationType
   title     String
   body      String
   isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
 
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, isRead])
 }
