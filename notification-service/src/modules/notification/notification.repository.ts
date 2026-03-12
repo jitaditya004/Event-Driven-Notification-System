@@ -1,4 +1,4 @@
-import { prisma } from "@/config/prisma"
+import { prisma } from "@/lib/prisma"
 import { CreateNotificationInput } from "./notification.service"
 
 export const createNotification = async (data: CreateNotificationInput) => {
