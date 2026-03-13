@@ -21,6 +21,7 @@ app.get("/health", (_, res) => {
 
 app.use("/notifications", notificationRoutes)
 
+
 const PORT = process.env.PORT || 4000
 
 app.listen(PORT, () => {
