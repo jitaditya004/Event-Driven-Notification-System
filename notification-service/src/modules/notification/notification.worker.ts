@@ -1,9 +1,12 @@
 import { Worker } from "bullmq"
 import { createNotification } from "./notification.service"
 
-new Worker(
+console.log("Notification worker started")
+
+const worker = new Worker(
   "notifications",
   async job => {
+    console.log("Processing job:", job.name, job.data)
 
     if (job.name === "user-registered") {
 
@@ -19,8 +22,15 @@ new Worker(
   },
   {
     connection: {
-      host: "127.0.0.1",
-      port: 6379
+      host: process.env.REDIS_HOST,
+      port: Number(process.env.REDIS_PORT)
     }
   }
 )
+
+
+worker.on("failed", (job, err) => {
+  console.error("Job failed:", job?.name, err)
+})
+
+

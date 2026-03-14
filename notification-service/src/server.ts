@@ -2,12 +2,13 @@ import express, { Application } from "express"
 import cors from "cors"
 import dotenv from "dotenv"
 import pinoHttp from "pino-http"
+dotenv.config()
 
 import "@/modules/notification/notification.handler"
 import notificationRoutes from "@/modules/notification/notification.routes"
 import "@/modules/notification/notification.worker"
 
-dotenv.config()
+
 
 const app: Application = express()
 
