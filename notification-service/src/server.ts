@@ -6,8 +6,8 @@ dotenv.config()
 
 import "@/modules/notification/notification.handler"
 import notificationRoutes from "@/modules/notification/notification.routes"
-import "@/modules/notification/notification.worker"
-
+import "@/worker/notification.worker"
+import { bullBoardRouter } from "@/queues/queueDashboard"
 
 
 const app: Application = express()
@@ -21,7 +21,7 @@ app.get("/health", (_, res) => {
 })
 
 app.use("/notifications", notificationRoutes)
-
+app.use("/admin/queues", bullBoardRouter)
 
 const PORT = process.env.PORT || 4000
 

@@ -1,5 +1,5 @@
 import { Worker } from "bullmq"
-import { createNotification } from "./notification.service"
+import { createNotification } from "@/modules/notification/notification.service"
 
 console.log("Notification worker started")
 
@@ -27,10 +27,12 @@ const worker = new Worker(
     }
   }
 )
-
+worker.on("completed", job => {
+  console.log("Job completed:", job.id,"  ",job?.name)
+})
 
 worker.on("failed", (job, err) => {
-  console.error("Job failed:", job?.name, err)
+  console.error("Job failed:", job?.id,"  ",job?.name, err)
 })
 
 

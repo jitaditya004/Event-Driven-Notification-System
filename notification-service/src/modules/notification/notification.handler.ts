@@ -1,5 +1,5 @@
 import { eventBus } from "@/events/eventBus"
-import { notificationQueue } from "@/modules/notification/notification.queue"
+import { notificationQueue } from "@/queues/notification.queue"
 
 type UserRegisteredEvent = {
   userId: string
@@ -15,6 +15,15 @@ eventBus.on("USER_REGISTERED", async (event: UserRegisteredEvent) => {
       "user-registered",
       {
         userId: event.userId
+      },
+      {
+        attempts: 5,
+        backoff: {
+          type: "exponential",
+          delay: 3000
+        },
+        removeOnComplete: true,
+        removeOnFail: false
       }
     )
 

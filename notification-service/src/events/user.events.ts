@@ -1,4 +1,4 @@
-import { notificationQueue } from "@/modules/notification/notification.queue"
+import { notificationQueue } from "@/queues/notification.queue"
 
 export async function handleUserRegistered(userId: string, email: string) {
 
