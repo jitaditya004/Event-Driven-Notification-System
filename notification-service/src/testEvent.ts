@@ -7,9 +7,17 @@ import "@/modules/notification/notification.handler"
 async function test() {
   const user = await prisma.user.create({
     data: {
-      email: "test@test.com"
+      email: `test-${Date.now()}@test.com`
     }
   })
+
+  // const user = await prisma.user.upsert({
+  //   where: { email: "test@test.com" },
+  //   update: {},
+  //   create: {
+  //     email: "test@test.com"
+  //   }
+  // })
 
   eventBus.emit("USER_REGISTERED", {
     userId: user.id

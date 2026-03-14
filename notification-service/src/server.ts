@@ -5,7 +5,7 @@ import pinoHttp from "pino-http"
 
 import "@/modules/notification/notification.handler"
 import notificationRoutes from "@/modules/notification/notification.routes"
-
+import "@/modules/notification/notification.worker"
 
 dotenv.config()
 

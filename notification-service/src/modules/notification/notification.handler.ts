@@ -1,20 +1,29 @@
 import { eventBus } from "@/events/eventBus"
-import { createNotification } from "@/modules/notification/notification.service"
+import { notificationQueue } from "@/modules/notification/notification.queue"
 
 type UserRegisteredEvent = {
   userId: string
 }
 
 eventBus.on("USER_REGISTERED", async (event: UserRegisteredEvent) => {
-    console.log("Received USER_REGISTERED event", event)
+
+  console.log("Received USER_REGISTERED event", event)
+
   try {
-    await createNotification({
-      userId: event.userId,
-      type: "SYSTEM",
-      title: "Welcome",
-      body: "Welcome to the platform"
-    })
+
+    await notificationQueue.add(
+      "user-registered",
+      {
+        userId: event.userId
+      }
+    )
+
+    console.log("Notification job queued")
+
   } catch (error) {
-    console.error("Failed to create notification", error)
+
+    console.error("Failed to queue notification", error)
+
   }
+
 })
