@@ -6,7 +6,12 @@
     "dev": "ts-node-dev  -r tsconfig-paths/register --respawn src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "test:event": "ts-node -r tsconfig-paths/register src/testEvent.ts"
+    "test:event": "ts-node -r tsconfig-paths/register src/testEvent.ts",
+    "test:job": "ts-node -r tsconfig-paths/register src/tests/addJob.ts",
+
+    "test:fail": "ts-node -r tsconfig-paths/register src/tests/addFailJob.ts",
+
+    "test:dlq": "ts-node -r tsconfig-paths/register src/tests/addDLQ.ts"
   },
   "keywords": [],
   "author": "",
@@ -22,8 +27,9 @@
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
-    "ioredis": "^5.10.0",
+    "ioredis": "^5.9.3",
     "kafkajs": "^2.2.4",
+    "nodemailer": "^8.0.2",
     "pino": "^10.3.1",
     "pino-http": "^11.0.0",
     "tsconfig-paths": "^4.2.0",

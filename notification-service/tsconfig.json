@@ -1,19 +1,26 @@
 {
   "compilerOptions": {
-    "forceConsistentCasingInFileNames": true,
     "target": "ES2022",
-    "module": "CommonJS",
-    "types": ["node"],
+    "module": "NodeNext",
+
     "rootDir": ".",
     "outDir": "dist",
+
     "strict": true,
-    "moduleResolution": "node",
+
+    "moduleResolution": "NodeNext",
+
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "baseUrl": "./src",
+
+    "forceConsistentCasingInFileNames": true,
+
+    "types": ["node"],
+
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["src","*.ts"]
+
+  "include": ["src/**/*.ts"]
 }

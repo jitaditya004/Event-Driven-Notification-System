@@ -24,6 +24,8 @@ async function test() {
   })
 
   console.log("Event emitted for user:", user.id)
+
+  process.exit(0);
 }
 
 test()

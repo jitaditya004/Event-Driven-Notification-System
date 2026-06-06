@@ -1,5 +1,7 @@
 import { Worker } from "bullmq"
 import { createNotification } from "@/modules/notification/notification.service"
+import { deadLetterQueue } from "@/queues/dlq.queue"
+import { redis } from "@/lib/redis"
 
 console.log("Notification worker started")
 
@@ -21,18 +23,29 @@ const worker = new Worker(
 
   },
   {
-    connection: {
-      host: process.env.REDIS_HOST,
-      port: Number(process.env.REDIS_PORT)
-    }
+    connection: redis
   }
 )
 worker.on("completed", job => {
   console.log("Job completed:", job.id,"  ",job?.name)
 })
 
-worker.on("failed", (job, err) => {
-  console.error("Job failed:", job?.id,"  ",job?.name, err)
+worker.on("failed", async (job, err) => {
+  if (!job) return
+
+  console.error("Job failed:", job.id, err.message)
+
+  if (job.attemptsMade >= (job.opts.attempts??1)) {
+
+    console.log("Moving job to DLQ")
+
+    await deadLetterQueue.add("failed-notification", {
+      originalJobId: job.id,
+      data: job.data,
+      error: err.message
+    })
+
+  }
 })
 
 
