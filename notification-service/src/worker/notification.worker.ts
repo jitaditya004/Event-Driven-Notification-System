@@ -8,24 +8,22 @@ console.log("Notification worker started")
 const worker = new Worker(
   "notifications",
   async job => {
-    console.log("Processing job:", job.name, job.data)
-
     if (job.name === "user-registered") {
-
       await createNotification({
         userId: job.data.userId,
         type: "SYSTEM",
+        channel: "IN_APP",
+        status: "SENT",
         title: "Welcome",
-        body: "Welcome to the platform"
-      })
-
+        body: "Welcome to the platform",
+        idempotencyKey: job.id!
+      });
     }
-
   },
   {
     connection: redis
   }
-)
+);
 worker.on("completed", job => {
   console.log("Job completed:", job.id,"  ",job?.name)
 })

@@ -5,34 +5,27 @@ type UserRegisteredEvent = {
   userId: string
 }
 
-eventBus.on("USER_REGISTERED", async (event: UserRegisteredEvent) => {
+eventBus.on("USER_REGISTERED", async event => {
+  console.log("USER_REGISTERED", event);
 
-  console.log("Received USER_REGISTERED event", event)
-
-  try {
-
-    await notificationQueue.add(
-      "user-registered",
-      {
-        userId: event.userId
+  await notificationQueue.add(
+    "user-registered",
+    {
+      userId: event.userId,
+      email: event.email
+    },
+    {
+      jobId: `welcome-${event.userId}`,
+      attempts: 5,
+      backoff: {
+        type: "exponential",
+        delay: 3000
       },
-      {
-        attempts: 5,
-        backoff: {
-          type: "exponential",
-          delay: 3000
-        },
-        removeOnComplete: true,
-        removeOnFail: false
-      }
-    )
-
-    console.log("Notification job queued")
-
-  } catch (error) {
-
-    console.error("Failed to queue notification", error)
-
-  }
-
-})
+      removeOnComplete: {
+        age: 3600,
+        count: 1000
+      },
+      removeOnFail: false
+    }
+  );
+});

@@ -1,30 +1,18 @@
-import express, { Application } from "express"
-import cors from "cors"
-import dotenv from "dotenv"
-import pinoHttp from "pino-http"
-dotenv.config()
+import dotenv from "dotenv";
+dotenv.config();
 
-import "@/modules/notification/notification.handler"
-import notificationRoutes from "@/modules/notification/notification.routes"
-import "@/worker/notification.worker"
-import { bullBoardRouter } from "@/queues/queueDashboard"
+import http from "http";
 
+import { app } from "./app";
+import { initSocket } from "./socket";
+import "@/worker/notification.worker";
 
-const app: Application = express()
+const server = http.createServer(app);
 
-app.use(cors())
-app.use(express.json())
-app.use(pinoHttp())
+initSocket(server);
 
-app.get("/health", (_, res) => {
-  res.json({ status: "ok" })
-})
+const PORT = process.env.PORT;
 
-app.use("/notifications", notificationRoutes)
-app.use("/admin/queues", bullBoardRouter)
-
-const PORT = process.env.PORT || 4000
-
-app.listen(PORT, () => {
-  console.log(`server running on port ${PORT}`)
-})
+server.listen(PORT, () => {
+  console.log(`server running on port ${PORT}`);
+});

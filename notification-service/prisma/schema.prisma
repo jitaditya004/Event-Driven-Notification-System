@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
 }
 
 // enum NotificationType {
@@ -22,16 +21,74 @@ model User {
   notifications Notification[]
 }
 
+// model Notification {
+//   id        String   @id @default(uuid())
+//   userId    String
+//   type      String
+//   title     String
+//   body      String
+//   isRead    Boolean  @default(false)
+//   createdAt DateTime @default(now())
+
+//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+//   @@index([userId, isRead])
+// }
+
+
+enum NotificationType {
+ SYSTEM
+ ORDER
+ COMMENT
+ FOLLOW
+}
+
+
+enum NotificationStatus {
+ PENDING
+ SENT
+ FAILED
+}
+
+
+enum NotificationChannel {
+ IN_APP
+ EMAIL
+ SMS
+ PUSH
+}
+
+
 model Notification {
-  id        String   @id @default(uuid())
-  userId    String
-  type      String
-  title     String
-  body      String
-  isRead    Boolean  @default(false)
-  createdAt DateTime @default(now())
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ id String @id @default(uuid())
 
-  @@index([userId, isRead])
+ userId String
+
+
+ type NotificationType
+
+
+ channel NotificationChannel @default(IN_APP)
+
+
+ status NotificationStatus @default(PENDING)
+
+
+ title String
+
+
+ body String
+
+
+ isRead Boolean @default(false)
+
+
+ idempotencyKey String @unique
+
+ createdAt DateTime @default(now())
+
+ user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+ @@index([userId, isRead])
 }
