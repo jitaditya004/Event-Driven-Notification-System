@@ -1,7 +1,7 @@
 import { Server } from "socket.io";
 import { Server as HttpServer } from "http";
 
-export let io: Server;
+let io: Server;
 
 export const initSocket = (server: HttpServer) => {
   io = new Server(server, {
@@ -11,14 +11,21 @@ export const initSocket = (server: HttpServer) => {
   });
 
   io.on("connection", socket => {
-    console.log("socket connected", socket.id);
+    console.log("Socket connected", socket.id);
 
     socket.on("join", userId => {
       socket.join(userId);
-
-      console.log("user joined", userId);
+      console.log("User joined", userId);
     });
   });
+
+  return io;
+};
+
+export const getIO = () => {
+  if (!io) {
+    throw new Error("Socket not initialized");
+  }
 
   return io;
 };

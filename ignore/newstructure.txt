@@ -1,0 +1,85 @@
+notification-service
+│
+├─ src
+│   ├─ controllers
+│   │     notification.controller.ts
+│   │
+│   ├─ services
+│   │     notification.service.ts
+│   │
+│   ├─ repositories
+│   │     notification.repository.ts
+│   │
+│   ├─ routes
+│   │     notification.routes.ts
+│   │
+│   ├─ events
+│   │     event.types.ts
+│   │
+│   ├─ utils
+│   │
+│   ├─ config
+│   │     prisma.ts
+│   │
+│   └─ server.ts
+│
+├─ prisma
+│   └─ schema.prisma
+
+
+
+
+Controller
+   ↓
+Service
+   ↓
+Repository
+   ↓
+Prisma
+   ↓
+Postgres
+
+
+
+User Service
+Order Service
+        │
+        ▼
+     Kafka
+        │
+        ▼
+ Notification Service
+        │
+        ▼
+ Redis Queue (BullMQ)
+        │
+        ▼
+ Email / SMS / Push
+
+
+
+ src
+ ├ server.ts
+ ├ config
+ │   ├ kafka.ts
+ │   ├ redis.ts
+ │
+ ├ events
+ │   ├ producer.ts
+ │   ├ consumer.ts
+ │
+ ├ queues
+ │   ├ notification.queue.ts
+ │
+ ├ workers
+ │   ├ notification.worker.ts
+ │
+ ├ services
+ │   ├ email.service.ts
+ │   ├ sms.service.ts
+ │
+ └ handlers
+     ├ userRegistered.handler.ts
+
+
+   

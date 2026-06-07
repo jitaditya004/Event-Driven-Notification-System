@@ -1,0 +1,44 @@
+npm init -y
+npm install express cors dotenv zod pino pino-http
+npm install -D typescript ts-node-dev @types/node @types/express
+npm install prisma @prisma/client
+
+npx tsc --init
+ts config changed
+
+npm install kafkajs ioredis bullmq
+
+npm install ioredis@latest
+npm dedupe
+
+
+docker run -p 6379:6379 redis
+docker ps
+
+docker compose -f docker-compose.kafka.yml up
+
+
+
+npx ts-node -r tsconfig-paths/register src/modules/notification/notification.worker.ts
+
+npm install @bull-board/api @bull-board/express
+
+
+
+npm install ioredis@latest
+npm dedupe
+
+
+
+npx prisma migrate dev --name improve_notifications
+then 
+npx prisma generate
+
+
+
+npm install socket.io
+
+
+
+
+npm create vite@latest frontend
