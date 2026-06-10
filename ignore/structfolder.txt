@@ -1,3 +1,5 @@
+cd email-notif/notif-system/notification-service
+
 notification-service
 │
 ├─ prisma

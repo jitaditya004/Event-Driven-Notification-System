@@ -11,11 +11,7 @@ export const createNotification = async (
       idempotencyKey:
         data.idempotencyKey
     },
-
-
     create: data,
-
-
     update: {}
 
   })

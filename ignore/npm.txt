@@ -42,3 +42,4 @@ npm install socket.io
 
 
 npm create vite@latest frontend
+npm install socket.io-client axios
