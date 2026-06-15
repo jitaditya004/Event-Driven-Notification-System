@@ -1,8 +1,14 @@
-import IORedis from "ioredis";
+import IORedis from "ioredis"
 
-export const redis: IORedis = new IORedis({
+const REDIS_PORT = Number(process.env.REDIS_PORT)
+
+if (!process.env.REDIS_HOST || Number.isNaN(REDIS_PORT)) {
+  throw new Error("Invalid Redis configuration")
+}
+
+export const redis = new IORedis({
   host: process.env.REDIS_HOST,
-  port: Number(process.env.REDIS_PORT),
+  port: REDIS_PORT,
   maxRetriesPerRequest: null,
-  enableReadyCheck: false,
-});
+  enableReadyCheck: false
+})

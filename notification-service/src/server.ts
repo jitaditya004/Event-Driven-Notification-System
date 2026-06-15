@@ -5,11 +5,13 @@ import http from "http";
 
 import { app } from "./app";
 import { initSocket } from "./socket";
-import "@/worker/notification.worker";
+import { startSocketSubscriber } from "./socket/subscriber";
 
 const server = http.createServer(app);
 
 initSocket(server);
+
+startSocketSubscriber();
 
 const PORT = process.env.PORT;
 

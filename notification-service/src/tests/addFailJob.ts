@@ -1,7 +1,6 @@
 import { notificationQueue } from "../queues/notification.queue"
 
-async function run() {
-
+const run = async () => {
   await notificationQueue.add(
     "send-email",
     {
@@ -9,12 +8,17 @@ async function run() {
       email: "fail@test.com"
     },
     {
-      attempts: 3
+      attempts: 3,
+      backoff: {
+        type: "exponential",
+        delay: 2000
+      }
     }
   )
 
   console.log("Fail job added")
 
+  await notificationQueue.close()
 }
 
 run()

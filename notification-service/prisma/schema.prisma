@@ -6,89 +6,80 @@ datasource db {
   provider = "postgresql"
 }
 
-// enum NotificationType {
-//   SYSTEM
-//   ORDER
-//   COMMENT
-//   FOLLOW
-// }
-
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  createdAt DateTime @default(now())
+  id        String @id @default(uuid())
+  email     String @unique
+  password  String
 
   notifications Notification[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
-
-// model Notification {
-//   id        String   @id @default(uuid())
-//   userId    String
-//   type      String
-//   title     String
-//   body      String
-//   isRead    Boolean  @default(false)
-//   createdAt DateTime @default(now())
-
-//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-//   @@index([userId, isRead])
-// }
-
 
 enum NotificationType {
- SYSTEM
- ORDER
- COMMENT
- FOLLOW
+  SYSTEM
+  ORDER
+  COMMENT
+  FOLLOW
 }
-
 
 enum NotificationStatus {
- PENDING
- SENT
- FAILED
+  PENDING
+  SENT
+  FAILED
 }
-
 
 enum NotificationChannel {
- IN_APP
- EMAIL
- SMS
- PUSH
+  IN_APP
+  EMAIL
+  SMS
+  PUSH
 }
 
-
 model Notification {
+  id String @id @default(uuid())
 
- id String @id @default(uuid())
+  userId String
 
- userId String
+  type NotificationType
 
+  channel NotificationChannel @default(IN_APP)
 
- type NotificationType
+  status NotificationStatus @default(PENDING)
 
+  title String
 
- channel NotificationChannel @default(IN_APP)
+  body String
 
+  isRead Boolean @default(false)
 
- status NotificationStatus @default(PENDING)
+  idempotencyKey String @unique
 
+  createdAt DateTime @default(now())
 
- title String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@index([userId, isRead])
+}
 
- body String
+enum OutboxStatus {
+  PENDING
+  PROCESSING
+  PROCESSED
+  FAILED
+}
 
+model OutboxEvent {
+  id String @id @default(uuid())
 
- isRead Boolean @default(false)
+  eventType String
+  payload   Json
 
+  status OutboxStatus @default(PENDING)
 
- idempotencyKey String @unique
+  attempts Int @default(0)
 
- createdAt DateTime @default(now())
-
- user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
- @@index([userId, isRead])
+  createdAt   DateTime  @default(now())
+  processedAt DateTime?
 }

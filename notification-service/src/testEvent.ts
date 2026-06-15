@@ -1,33 +1,14 @@
 import "dotenv/config"
-import { prisma } from "@/lib/prisma"
-import { eventBus } from "@/events/eventBus"
-import "@/modules/notification/notification.handler"
-
+import { createUser } from "@/modules/user/user.service"
 
 async function test() {
-  const user = await prisma.user.create({
-    data: {
-      email: `test-${Date.now()}@test.com`
-    }
+  const user = await createUser({
+    email: `test-${Date.now()}@test.com`
   })
 
-  // const user = await prisma.user.upsert({
-  //   where: { email: "test@test.com" },
-  //   update: {},
-  //   create: {
-  //     email: "test@test.com"
-  //   }
-  // })
+  console.log("User created:", user.id)
 
-  eventBus.emit("USER_REGISTERED", {
-    userId: user.id
-  })
-
-  console.log("Event emitted for user:", user.id)
-
-  process.exit(0);
+  process.exit(0)
 }
 
 test()
-
-//npx ts-node -r tsconfig-paths/register src/testEvent.ts

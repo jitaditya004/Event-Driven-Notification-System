@@ -1,15 +1,26 @@
 import { Worker } from "bullmq";
 
 import { redis } from "@/lib/redis";
-import { getIO } from "@/socket";
 import { createNotification } from "@/modules/notification/notification.service";
 import { deadLetterQueue } from "@/queues/dlq.queue";
+import { publisher } from "@/lib/pubsub"
+
+const TEST_FAILURE = process.env.TEST_FAILURE === "true"
 
 console.log("Notification worker started");
 
 const worker = new Worker(
   "notifications",
   async job => {
+    console.log("Processing job:", job.name, job.data)
+
+    if (
+      TEST_FAILURE &&
+      job.attemptsMade < 2
+    ) {
+      throw new Error("Simulated worker failure")
+    }
+    
     if (job.name === "user-registered") {
       const notification = await createNotification({
         userId: job.data.userId,
@@ -21,9 +32,13 @@ const worker = new Worker(
         idempotencyKey: job.id!
       });
 
-      getIO()
-        .to(job.data.userId)
-        .emit("notification", notification);
+      await publisher.publish(
+        "notification-created",
+        JSON.stringify({
+          userId: job.data.userId,
+          notification
+        })
+      )
     }
   },
   {
@@ -36,15 +51,19 @@ worker.on("completed", job => {
 });
 
 worker.on("failed", async (job, err) => {
-  if (!job) return;
+  if (!job) return
 
-  console.error("Job failed:", job.id, err.message);
+  console.error("Job failed:", job.id, err.message)
 
   if (job.attemptsMade >= (job.opts.attempts ?? 1)) {
+    console.log("Moving job to DLQ")
+
     await deadLetterQueue.add("failed-notification", {
       originalJobId: job.id,
+      name: job.name,
       data: job.data,
-      error: err.message
-    });
+      error: err.message,
+      failedAt: new Date()
+    })
   }
-});
+})

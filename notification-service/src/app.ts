@@ -4,6 +4,7 @@ import pinoHttp from "pino-http";
 
 import "@/modules/notification/notification.handler";
 import notificationRoutes from "@/modules/notification/notification.routes";
+import authRoutes from "@/modules/auth/auth.routes";
 import { bullBoardRouter } from "@/queues/queueDashboard";
 
 export const app: Application = express();
@@ -18,3 +19,7 @@ app.get("/health", (_, res) => {
 
 app.use("/notifications", notificationRoutes);
 app.use("/admin/queues", bullBoardRouter);
+app.use(
+ "/auth",
+ authRoutes
+)

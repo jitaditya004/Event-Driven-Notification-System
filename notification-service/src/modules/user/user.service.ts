@@ -1,0 +1,9 @@
+import * as repository from "./user.repository"
+
+type CreateUserInput = {
+  email: string
+}
+
+export const createUser = async (input: CreateUserInput) => {
+  return repository.createUserWithOutbox(input)
+}
