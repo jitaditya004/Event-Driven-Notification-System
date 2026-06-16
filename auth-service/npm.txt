@@ -1,0 +1,22 @@
+npx tsc --init
+
+npm i -D tsconfig-paths
+
+npx prisma init
+
+
+npm install -D @types/cors
+
+
+npm install -D @types/express @types/node
+
+
+npm install cookie-parser
+npm install -D @types/cookie-parser
+
+npm install bcrypt
+npm install -D @types/bcrypt
+
+
+npm install @prisma/adapter-pg pg
+npm install -D @types/pg

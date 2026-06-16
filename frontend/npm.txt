@@ -1,1 +1,8 @@
 npm install socket.io-client axios
+
+
+
+npm install axios react-router-dom
+
+
+npm install tailwindcss @tailwindcss/vite

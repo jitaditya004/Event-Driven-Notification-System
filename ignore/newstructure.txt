@@ -1,3 +1,35 @@
+
+                LOGIN
+Frontend -----------------> Auth Service
+                             |
+                             |
+                        HTTP-only JWT cookie
+                             |
+                             ↓
+
+Frontend ---------> Notification Service
+ GET /notifications/me
+          |
+          |
+          ↓
+
+ Notification Service
+ verifies JWT
+ gets userId
+          |
+          ↓
+
+ PostgreSQL
+ Notification table
+ userId column only
+
+
+
+
+
+
+
+
 notification-service
 │
 ├─ src
@@ -82,4 +114,77 @@ Order Service
      ├ userRegistered.handler.ts
 
 
+
+
+
+
+
+Action happens
+
+     |
+     v
+
+Event Created
+
+     |
+     v
+
+Message Queue
+
+     |
+     v
+
+Notification Worker
+
+     |
+     v
+
+Send Notification
+
+     |
+     v
+
+Save Status
+
+
+
+
    
+
+Express API
+
+   |
+   v
+
+BullMQ Queue
+
+   |
+   v
+
+Redis
+
+   |
+   v
+
+BullMQ Worker
+
+   |
+   v
+
+Prisma
+
+   |
+   v
+
+Postgres DB
+
+
+   |
+   v
+
+Socket.IO
+
+   |
+   v
+
+React Client   

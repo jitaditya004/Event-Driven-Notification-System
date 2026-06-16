@@ -6,16 +6,6 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id        String @id @default(uuid())
-  email     String @unique
-  password  String
-
-  notifications Notification[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
 
 enum NotificationType {
   SYSTEM
@@ -57,8 +47,6 @@ model Notification {
   idempotencyKey String @unique
 
   createdAt DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, isRead])
 }

@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-
 import { verifyToken } from "@/utils/jwt";
 
 declare global {
@@ -17,15 +16,13 @@ export function authMiddleware(
   res: Response,
   next: NextFunction,
 ) {
-  const header = req.headers.authorization;
+  const token = req.cookies.accessToken;
 
-  if (!header) {
+  if (!token) {
     return res.status(401).json({
       message: "Unauthorized",
     });
   }
-
-  const token = header.split(" ")[1];
 
   const payload = verifyToken(token);
 

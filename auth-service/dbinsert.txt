@@ -1,0 +1,17 @@
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+INSERT INTO "User" (
+  id,
+  email,
+  password,
+  "createdAt",
+  "updatedAt"
+)
+SELECT
+  gen_random_uuid(),
+  'user' || n || '@test.com',
+  '$2b$12$EIXvU6F8fY4xYk0P9zQ1XuSpW7F7EQZq1vy9Me3hYuBqD.L6XEW2K',
+  NOW(),
+  NOW()
+FROM generate_series(1, 50) AS n;
+

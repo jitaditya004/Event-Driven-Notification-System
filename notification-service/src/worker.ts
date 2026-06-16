@@ -1,8 +1,5 @@
-import "dotenv/config"
-import "@/modules/notification/notification.handler"
-import "@/worker/notification.worker"
-import "@/worker/outbox.worker"
+import "dotenv/config";
+import "@/modules/notification/notification.handler";
+import "@/worker/notification.worker";
 
-console.log(
-  "Worker running..."
-)
+console.log("Worker running...");

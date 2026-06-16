@@ -1,17 +1,11 @@
-import { notificationQueue } from "../queues/notification.queue"
+import { notificationQueue } from "../queues/notification.queue";
 
 async function run() {
+  await notificationQueue.add("send-email", {
+    userId: "123",
+  });
 
-  await notificationQueue.add(
-    "send-email",
-    {
-      userId: "123",
-      email: "test@test.com"
-    }
-  )
-
-  console.log("Job added")
-
+  console.log("Job added");
 }
 
-run()
+run();

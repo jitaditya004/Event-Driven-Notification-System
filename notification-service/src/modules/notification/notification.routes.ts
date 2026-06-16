@@ -1,9 +1,12 @@
-import { Router } from "express"
-import * as controller from "./notification.controller"
+import { Router } from "express";
+import * as controller from "./notification.controller";
+import { authMiddleware } from "../../middleware/auth.middleware";
 
-const router = Router()
+const router = Router();
 
-router.post("/", controller.createNotification)
-router.get("/:userId", controller.getNotifications)
+router.post("/", controller.createNotification); //close it
+//later consume kafka or rabbitmq ,to /internal/events
 
-export default router
+router.get("/me", authMiddleware, controller.getMyNotifications);
+
+export default router;

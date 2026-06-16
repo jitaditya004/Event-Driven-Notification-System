@@ -31,7 +31,7 @@ npm dedupe
 
 
 npx prisma migrate dev --name improve_notifications
-then 
+then,
 npx prisma generate
 
 
@@ -43,3 +43,22 @@ npm install socket.io
 
 npm create vite@latest frontend
 npm install socket.io-client axios
+
+
+
+
+npm install bcrypt jsonwebtoken
+npm install -D @types/bcrypt @types/jsonwebtoken
+
+
+
+mkdir auth-service
+cd auth-service
+
+npm init -y
+npm i express prisma @prisma/client jsonwebtoken bcrypt zod dotenv cors
+npm i -D typescript tsx @types/node @types/express
+
+
+npm install cookie-parser
+npm install -D @types/cookie-parser
