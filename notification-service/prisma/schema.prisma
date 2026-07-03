@@ -71,3 +71,12 @@ model OutboxEvent {
   createdAt   DateTime  @default(now())
   processedAt DateTime?
 }
+
+
+model UserProjection {
+  id String @id
+
+  email String?
+
+  createdAt DateTime
+}

@@ -11,26 +11,38 @@ declare global {
   }
 }
 
+type JwtPayload = {
+  userId: string;
+};
+
 export function authMiddleware(
   req: Request,
   res: Response,
   next: NextFunction,
 ) {
-  const token = req.cookies.accessToken;
+  try {
+    const token = req.cookies.accessToken;
 
-  if (!token) {
+    if (!token) {
+      return res.status(401).json({
+        message: "Unauthorized",
+      });
+    }
+
+    if (!process.env.JWT_SECRET) {
+      throw new Error("JWT_SECRET missing");
+    }
+
+    const payload = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
+
+    req.user = {
+      id: payload.userId,
+    };
+
+    next();
+  } catch (error) {
     return res.status(401).json({
-      message: "Unauthorized",
+      message: "Invalid token",
     });
   }
-
-  const payload = jwt.verify(token, process.env.JWT_SECRET!) as {
-    userId: string;
-  };
-
-  req.user = {
-    id: payload.userId,
-  };
-
-  next();
 }

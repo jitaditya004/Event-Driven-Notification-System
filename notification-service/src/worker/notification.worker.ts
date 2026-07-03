@@ -37,6 +37,18 @@ const worker = new Worker(
         }),
       );
     }
+
+    if (job.name === "broadcast") {
+      await createNotification({
+        userId: job.data.userId,
+        type: "SYSTEM",
+        channel: "IN_APP",
+        status: "SENT",
+        title: job.data.title,
+        body: job.data.body,
+        idempotencyKey: job.id!,
+      });
+    }
   },
   {
     connection: redis,

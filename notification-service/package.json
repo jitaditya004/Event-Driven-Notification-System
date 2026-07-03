@@ -10,7 +10,8 @@
     "test:job": "ts-node -r tsconfig-paths/register src/tests/addJob.ts",
     "test:fail": "ts-node -r tsconfig-paths/register src/tests/addFailJob.ts",
     "test:dlq": "ts-node -r tsconfig-paths/register src/tests/addDLQ.ts",
-    "worker": "ts-node -r tsconfig-paths/register src/worker.ts"
+    "worker": "ts-node -r tsconfig-paths/register src/worker.ts",
+    "broadcast": "ts-node -r tsconfig-paths/register src/testBroadcast.ts"
   },
   "keywords": [],
   "author": "",

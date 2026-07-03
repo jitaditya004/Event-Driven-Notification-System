@@ -36,3 +36,4 @@ model OutboxEvent {
   createdAt DateTime @default(now())
   processedAt DateTime?
 }
+
