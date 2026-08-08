@@ -1,0 +1,21 @@
+Option 1 (Recommended): Run Redis with Docker
+docker run -d \
+  --name redis \
+  -p 6379:6379 \
+  redis:7
+
+Check it's running:
+
+docker ps
+
+Connect:
+
+docker exec -it redis redis-cli
+
+Test it:
+
+PING
+
+Output:
+
+PONG

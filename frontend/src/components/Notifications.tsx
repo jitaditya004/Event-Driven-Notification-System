@@ -10,6 +10,8 @@ export default function Notifications() {
     async function fetchNotifications() {
       const res = await notificationApi.get<Notification[]>("/notifications/me");
 
+      console.log(res.data);
+
       setNotifications(res.data);
     }
 

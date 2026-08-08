@@ -1,4 +1,7 @@
 
+ cd Event-Driven-Notification-System/notification-service
+
+
                 LOGIN
 Frontend -----------------> Auth Service
                              |
