@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import { createUser } from "./auth.repository";
 import { prisma } from "@/lib/prisma";
 import { createToken } from "@/utils/jwt";
 
@@ -18,13 +19,9 @@ export async function registerUser(data: AuthInput) {
     throw new Error("User already exists");
   }
 
-  const hashedPassword = await bcrypt.hash(data.password, 12);
-
-  const user = await prisma.user.create({
-    data: {
-      email: data.email,
-      password: hashedPassword,
-    },
+  const user = await createUser({
+    email: data.email,
+    password: data.password,
   });
 
   const token = createToken(user.id);
