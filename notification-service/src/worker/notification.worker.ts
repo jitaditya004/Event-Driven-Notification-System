@@ -39,7 +39,7 @@ const worker = new Worker(
     }
 
     if (job.name === "broadcast") {
-      await createNotification({
+      const notification=await createNotification({
         userId: job.data.userId,
         type: "SYSTEM",
         channel: "IN_APP",
@@ -48,6 +48,13 @@ const worker = new Worker(
         body: job.data.body,
         idempotencyKey: job.id!,
       });
+      await publisher.publish(
+        "notification-created",
+        JSON.stringify({
+          userId: job.data.userId,
+          notification,
+        }),
+      );
     }
   },
   {

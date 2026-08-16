@@ -33,3 +33,6 @@ async function processOutbox() {
 setInterval(processOutbox, 5000);
 
 console.log("Auth outbox running");
+
+
+//later add number of attempts, incase it goes to redis but db update fails then its not marked processed..
