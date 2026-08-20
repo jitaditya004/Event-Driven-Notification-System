@@ -9,9 +9,15 @@ type AuthInput = {
 };
 
 export async function registerUser(data: AuthInput) {
+  if(!data.email?.trim()){
+    throw new Error("Email Required");
+  }
+  if (!data.password?.trim()) {
+    throw new Error("Password is required");
+  }
   const exists = await prisma.user.findUnique({
     where: {
-      email: data.email,
+      email: data.email.trim(),
     },
   });
 
@@ -20,7 +26,7 @@ export async function registerUser(data: AuthInput) {
   }
 
   const user = await createUser({
-    email: data.email,
+    email: data.email.trim(),
     password: data.password,
   });
 
@@ -36,9 +42,16 @@ export async function registerUser(data: AuthInput) {
 }
 
 export async function loginUser(data: AuthInput) {
+  if (!data.email?.trim()) {
+    throw new Error("Email is required");
+  }
+
+  if (!data.password?.trim()) {
+    throw new Error("Password is required");
+  }
   const user = await prisma.user.findUnique({
     where: {
-      email: data.email,
+      email: data.email.trim(),
     },
   });
 
