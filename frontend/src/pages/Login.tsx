@@ -17,8 +17,8 @@ export default function Login() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-300 via-blue-600 to-blue-950">
-      <section className="w-[380px] rounded-2xl bg-white/10 backdrop-blur-xl px-10 py-12 text-white shadow-2xl">
+    <main className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-300 via-blue-600 to-blue-950">
+      <section className="w-95 rounded-2xl bg-white/10 backdrop-blur-xl px-10 py-12 text-white shadow-2xl">
         <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border-2 border-white text-4xl">
           👤
         </div>

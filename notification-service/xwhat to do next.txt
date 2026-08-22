@@ -1,0 +1,42 @@
+1  Idempotency + duplicate prevention
+
+
+2  Proper Outbox reliability
+
+Your current outbox worker basically does:
+
+get PENDING
+   ↓
+send to Redis
+   ↓
+mark PROCESSED
+
+You already noticed the dangerous case yourself:
+
+Redis succeeds
+      ↓
+DB update fails
+      ↓
+event remains PENDING
+      ↓
+worker sends it AGAIN
+
+
+attempts
+lastError
+nextRetryAt
+processedAt
+
+
+
+3  Notification preferences
+
+
+4  Scheduled notifications
+
+
+5 — Rate limiting
+
+6 — Priority queues
+
+

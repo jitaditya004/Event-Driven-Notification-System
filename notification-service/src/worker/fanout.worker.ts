@@ -35,7 +35,7 @@ const worker = new Worker(
             body: job.data.body,
           },
           opts: {
-            jobId: `${job.id}-${user.id}`,
+            jobId: `${job.data.broadcastId}-${user.id}`,
           },
         })),
       );
@@ -53,3 +53,26 @@ const worker = new Worker(
 worker.on("completed", (job) => {
   console.log("Fanout completed:", job.id);
 });
+
+
+
+
+/*
+like for any broadcast send like this maybe
+const broadcastId = crypto.randomUUID();
+
+async function testBroadcast() {
+  await publisher.publish(
+    "domain-events",
+    JSON.stringify({
+      type: "BROADCAST_NOTIFICATION",
+      payload: {
+        broadcastId,
+        title: "New Feature Released 🚀",
+        body: "We added light mode support! subscribe our youtube!!",
+        channel: "IN_APP",
+      },
+    }),
+  );
+  
+  */

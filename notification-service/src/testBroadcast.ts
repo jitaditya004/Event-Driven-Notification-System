@@ -1,5 +1,8 @@
 import "dotenv/config";
 import { publisher } from "@/lib/pubsub";
+import crypto from "crypto";
+
+const broadcastId = crypto.randomUUID();
 
 async function testBroadcast() {
   await publisher.publish(
@@ -7,8 +10,9 @@ async function testBroadcast() {
     JSON.stringify({
       type: "BROADCAST_NOTIFICATION",
       payload: {
+        broadcastId,
         title: "New Feature Released 🚀",
-        body: "We added dark mode support!",
+        body: "We added light mode support! subscribe our youtube!!",
         channel: "IN_APP",
       },
     }),
