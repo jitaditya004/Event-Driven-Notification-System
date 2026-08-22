@@ -5,7 +5,7 @@ import { Link,useNavigate } from "react-router-dom";
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   async function submit() {
     await authApi.post("/auth/register", {
@@ -13,7 +13,7 @@ export default function Register() {
       password,
     });
 
-    navigate("/login");
+    // navigate("/login");
   }
 
   return (

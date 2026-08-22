@@ -1,8 +1,8 @@
 PORT=5000
-ALLOWED_ORIGINS=http://localhost:5173/
+ALLOWED_ORIGINS=http://localhost:5173
 DATABASE_URL=postgresql://postgres:@localhost:5432/notification_db
 REDIS_HOST=localhost
 REDIS_PORT=6379
-JWT_SECRET=adadawdawdadw
-FRONTEND_URL=http://localhost:5173/
+JWT_SECRET=same as auth service 
+FRONTEND_URL=http://localhost:5173
 TEST_FAILURE=false
