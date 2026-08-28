@@ -33,3 +33,16 @@ export function me(req: Request, res: Response) {
     user: req.user,
   });
 }
+
+
+export function logout(req: Request, res: Response) {
+  res.clearCookie("accessToken", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+  });
+
+  res.json({
+    message: "Logged out successfully",
+  });
+}
